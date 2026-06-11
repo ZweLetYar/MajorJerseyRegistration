@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { getQR } from "@/lib/qr";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -48,24 +49,27 @@ export default function RegisterPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const fullRollNo = `${form.rollPrefix}-${form.rollNumber}`;
+    let qr = getQR(form.year);
+    router.push(`/payment/${qr}`);
 
-    const payload = {
-      ...form,
-      rollNo: fullRollNo,
-    };
+    // const fullRollNo = `${form.rollPrefix}-${form.rollNumber}`;
 
-    const res = await fetch("/api/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
+    // const payload = {
+    //   ...form,
+    //   rollNo: fullRollNo,
+    // };
 
-    const data = await res.json();
+    // const res = await fetch("/api/register", {
+    //   method: "POST",
+    //   headers: { "Content-Type": "application/json" },
+    //   body: JSON.stringify(payload),
+    // });
 
-    if (data?.id) {
-      router.push(`/payment/${data.id}`);
-    }
+    // const data = await res.json();
+
+    // if (data?.id) {
+    //   router.push(`/payment/${data.id}`);
+    // }
   };
 
   if (form.rollNumber > 150) {
@@ -158,7 +162,7 @@ export default function RegisterPage() {
           type="submit"
           className="w-full bg-blue-900 text-white p-3 rounded-lg text-sm font-medium cursor-pointer hover:bg-blue-800 transition-colors"
         >
-          Register
+          Register & Pay
         </button>
       </form>
     </div>
