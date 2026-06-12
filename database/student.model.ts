@@ -1,23 +1,23 @@
 import mongoose, { type Document, type Model, Schema } from "mongoose";
 
 export interface IStudent extends Document {
-  fullName: string;
-  studentId: string;
+  name: string;
+
   email: string;
   phone: string;
-  major: string;
-  jerseySize: "XS" | "S" | "M" | "L" | "XL" | "XXL";
-  paymentStatus: "pending" | "paid";
+  year: string;
+  rollNo: string;
+
   paymentProofUrl?: string;
-  qrCode?: string;
+
   createdAt: Date;
   updatedAt: Date;
 }
 
 const StudentSchema = new Schema<IStudent>(
   {
-    fullName: { type: String, required: true, trim: true },
-    studentId: { type: String, required: true, unique: true, trim: true },
+    name: { type: String, required: true, trim: true },
+
     email: {
       type: String,
       required: true,
@@ -26,19 +26,10 @@ const StudentSchema = new Schema<IStudent>(
       lowercase: true,
     },
     phone: { type: String, required: true, trim: true },
-    major: { type: String, required: true, trim: true },
-    jerseySize: {
-      type: String,
-      enum: ["XS", "S", "M", "L", "XL", "XXL"],
-      required: true,
-    },
-    paymentStatus: {
-      type: String,
-      enum: ["pending", "paid"],
-      default: "pending",
-    },
+    year: { type: String, required: true, trim: true },
+    rollNo: { type: String, required: true, unique: true, trim: true },
+
     paymentProofUrl: { type: String, default: "" },
-    qrCode: { type: String, default: "" },
   },
   { timestamps: true },
 );
