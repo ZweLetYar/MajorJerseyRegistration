@@ -96,6 +96,27 @@ function Page() {
     }
   };
 
+  const sendMail = async (student: Student) => {
+    console.log("Sending confirmation email to:", student.email);
+    await fetch("/api/send-confirmation", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        to: student.email,
+        name: student.name,
+        year: student.year,
+        rollNo: `${student.rollNo.rollPrefix}-${student.rollNo.rollNumber}`,
+      }),
+    });
+  };
+
+  const handleConfirm = async (student: Student) => {
+    await handleStatusChange(student._id, "confirmed");
+    await sendMail(student);
+  };
+
   return (
     <div className="min-h-screen  px-3 py-4 text-slate-800 sm:px-4 sm:py-6">
       <div className="mx-auto max-w-6xl">
@@ -194,9 +215,7 @@ function Page() {
                       <div className="flex flex-wrap gap-2 sm:flex-col sm:items-end">
                         <button
                           type="button"
-                          onClick={() =>
-                            handleStatusChange(student._id, "confirmed")
-                          }
+                          onClick={() => handleConfirm(student)}
                           disabled={updatingId === student._id}
                           className="rounded-lg bg-emerald-600 px-3 py-2 text-xs font-semibold text-white transition hover:bg-emerald-700 disabled:cursor-not-allowed disabled:bg-emerald-400"
                         >
