@@ -97,7 +97,6 @@ function Page() {
   };
 
   const sendMail = async (student: Student) => {
-    console.log("Sending confirmation email to:", student.email);
     await fetch("/api/send-confirmation", {
       method: "POST",
       headers: {
@@ -207,7 +206,8 @@ function Page() {
                           {student.phone}
                         </p>
                         <p className="text-sm text-slate-600">
-                          {student.rollNo.rollPrefix}{" "}
+                          {student.rollNo.rollPrefix}
+                          {"-"}
                           {student.rollNo.rollNumber}
                         </p>
                       </div>

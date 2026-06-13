@@ -117,7 +117,7 @@ function Page() {
               {yearEntries.map(([year, yearStudents]) => (
                 <Link
                   key={year}
-                  href={`/admin/dashboard/${encodeURIComponent(year)}`}
+                  href={`/admin/dashboardyenom/${encodeURIComponent(year)}`}
                   className="flex items-center justify-between rounded-xl border border-slate-200 px-3 py-2 text-sm font-medium text-slate-700 transition hover:border-blue-900 hover:bg-blue-50 hover:text-blue-900"
                 >
                   <span>{year}</span>
@@ -195,7 +195,7 @@ function Page() {
                 {yearEntries.map(([year, yearStudents]) => (
                   <Link
                     key={year}
-                    href={`/admin/dashboard/${encodeURIComponent(year)}`}
+                    href={`/admin/dashboardyenom/${encodeURIComponent(year)}`}
                     className="rounded-xl border border-slate-200 p-4 transition hover:border-blue-900 hover:bg-blue-50"
                   >
                     <div className="flex items-center justify-between">

@@ -43,7 +43,7 @@ function Page() {
     const enteredCode = code.join("");
     if (enteredCode === password) {
       // Handle successful password entry
-      router.push("/admin/dashboard");
+      router.push("/admin/dashboardyenom");
     } else {
       // Handle incorrect password
       alert("Incorrect password. Please try again.");

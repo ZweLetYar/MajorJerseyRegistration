@@ -26,8 +26,12 @@ export default function SuccessPage() {
         </h1>
         <p className="mt-3 text-sm leading-6 text-slate-600">
           Our team will review it and send you a confirmation email within 24
-          hours. We have a plan to give a present to the registrants 🥳, so
-          please wait for the announcement. Thank you for registering!
+          hours{" "}
+          <span className=" text-blue-800">
+            (Please also check your spam folder)
+          </span>
+          . We have a plan to give a present to the registrants 🥳, so please
+          wait for the announcement. Thank you for registering!
         </p>
 
         <div className="mt-6 rounded-2xl border border-slate-200 bg-slate-50 p-4 text-left">

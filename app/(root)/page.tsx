@@ -118,94 +118,100 @@ export default function RegisterForm() {
   };
 
   return (
-    <div className="w-full h-full max-w-sm bg-white rounded-2xl shadow-lg p-6 mt-10">
-      <h1 className="text-xl font-bold text-center text-blue-900">
-        Major Jersey Registration
-      </h1>
+    <div className=" flex flex-col items-center justify-center ">
+      <div className="w-full h-full max-w-sm bg-white rounded-2xl shadow-lg p-6 mt-10">
+        <h1 className="text-xl font-bold text-center text-blue-900">
+          Major Jacket Registration
+        </h1>
 
-      <p className="text-sm text-gray-500 text-center mb-6">
-        Enter your details
-      </p>
+        <p className="text-sm text-gray-500 text-center mb-6">
+          Enter your details
+        </p>
 
-      <form onSubmit={handleSubmit} className="space-y-3">
-        <input
-          name="name"
-          placeholder="Full Name"
-          value={form.name}
-          onChange={handleChange}
-          className="w-full p-3 border rounded-lg text-sm"
-          required
-        />
-
-        <input
-          name="email"
-          type="email"
-          placeholder="Email"
-          value={form.email}
-          onChange={handleChange}
-          className="w-full p-3 border rounded-lg text-sm"
-          required
-        />
-
-        <input
-          name="phone"
-          type="tel"
-          value={form.phone}
-          onChange={handleChange}
-          className="w-full p-3 border rounded-lg text-sm"
-          required
-        />
-
-        <select
-          name="year"
-          value={form.year}
-          onChange={handleChange}
-          className="w-full p-3 border rounded-lg text-sm"
-          required
-        >
-          <option value="">Select Year</option>
-          <option value="1st year">1st Year</option>
-          <option value="2nd year">2nd Year</option>
-          <option value="3rd year">3rd Year</option>
-          <option value="4th year">4th Year</option>
-          <option value="5th year(first sem)">5th Year (first sem)</option>
-          <option value="5th year(second sem)">5th Year (second sem)</option>
-          <option value="6th year">6th Year</option>
-        </select>
-
-        <div className="flex gap-2">
+        <form onSubmit={handleSubmit} className="space-y-3">
           <input
-            value={form.rollNo.rollPrefix}
-            placeholder="Roll No."
-            readOnly
-            className="w-[60%] p-3 border rounded-lg text-sm bg-gray-100"
-          />
-
-          <input
-            name="rollNumber"
-            type="number"
-            min={1}
-            max={150}
-            // value={form.rollNo.rollNumber}
+            name="name"
+            placeholder="Full Name"
+            value={form.name}
             onChange={handleChange}
-            placeholder="(e.g. 1, 34, 99)"
-            className="w-[40%] p-3 border rounded-lg text-sm"
+            className="w-full p-3 border rounded-lg text-sm"
             required
           />
-        </div>
 
-        {submitMessage ? (
-          <p className="text-sm text-red-500">{submitMessage}</p>
-        ) : null}
+          <input
+            name="email"
+            type="email"
+            placeholder="Email"
+            value={form.email}
+            onChange={handleChange}
+            className="w-full p-3 border rounded-lg text-sm"
+            required
+          />
 
-        <button
-          type="submit"
-          disabled={isSubmitting}
-          className="w-full bg-blue-900 text-white p-3 rounded-lg text-sm font-medium cursor-pointer hover:bg-blue-800 disabled:cursor-not-allowed disabled:bg-blue-700"
-        >
-          {isSubmitting ? "Checking..." : "Register & Pay"}
-        </button>
-      </form>
+          <input
+            name="phone"
+            type="tel"
+            value={form.phone}
+            onChange={handleChange}
+            className="w-full p-3 border rounded-lg text-sm"
+            required
+          />
+
+          <select
+            name="year"
+            value={form.year}
+            onChange={handleChange}
+            className="w-full p-3 border rounded-lg text-sm"
+            required
+          >
+            <option value="">Select Year</option>
+            <option value="1st year">1st Year</option>
+            <option value="2nd year">2nd Year</option>
+            <option value="3rd year">3rd Year</option>
+            <option value="4th year">4th Year</option>
+            <option value="5th year(first sem)">5th Year (first sem)</option>
+            <option value="5th year(second sem)">5th Year (second sem)</option>
+            <option value="6th year">6th Year</option>
+          </select>
+
+          <div className="flex gap-2">
+            <input
+              value={form.rollNo.rollPrefix}
+              placeholder="Roll No."
+              readOnly
+              className="w-[60%] p-3 border rounded-lg text-sm bg-gray-100"
+            />
+
+            <input
+              name="rollNumber"
+              type="number"
+              min={1}
+              max={150}
+              // value={form.rollNo.rollNumber}
+              onChange={handleChange}
+              placeholder="(e.g. 1, 34, 99)"
+              className="w-[40%] p-3 border rounded-lg text-sm"
+              required
+            />
+          </div>
+
+          {submitMessage ? (
+            <p className="text-sm text-red-500">{submitMessage}</p>
+          ) : null}
+
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="w-full bg-blue-900 text-white p-3 rounded-lg text-sm font-medium cursor-pointer hover:bg-blue-800 disabled:cursor-not-allowed disabled:bg-blue-700"
+          >
+            {isSubmitting ? "Checking..." : "Register & Pay"}
+          </button>
+        </form>
+      </div>
+      <p className="text-xs font-medium text-center text-blue-700 mt-6 w-[90%] max-w-sm leading-relaxed">
+        Jacket pricing may range from 38,500 MMK to 43,500 MMK depending on the
+        final registration quantity.
+      </p>
     </div>
   );
 }
