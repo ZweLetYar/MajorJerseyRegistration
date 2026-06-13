@@ -5,12 +5,15 @@ import { useUploadThing } from "@/lib/uploadthing";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
+type StudentStatus = "confirmed" | "unchecked" | "rejected";
+
 type RegistrationData = {
   name: string;
   email: string;
   phone: string;
   year: string;
   rollNo: { rollPrefix: string; rollNumber: number };
+  status?: StudentStatus;
 };
 
 function RegisterForm() {
@@ -118,6 +121,7 @@ function RegisterForm() {
       const response = await api.registrants.create({
         ...payloadData,
         paymentProofUrl: uploadedUrl,
+        status: "unchecked",
       });
 
       if (response?.success) {

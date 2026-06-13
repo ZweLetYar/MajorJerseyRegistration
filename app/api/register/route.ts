@@ -40,6 +40,56 @@ export async function GET(req: Request) {
   }
 }
 
+export async function PATCH(req: Request) {
+  try {
+    await dbConnect();
+
+    const { searchParams } = new URL(req.url);
+    const id = searchParams.get("id");
+    const body = await req.json();
+    const nextStatus = body?.status;
+
+    if (!id) {
+      return NextResponse.json(
+        { success: false, message: "Student id is required" },
+        { status: 400 },
+      );
+    }
+
+    if (!["confirmed", "rejected"].includes(nextStatus)) {
+      return NextResponse.json(
+        { success: false, message: "Invalid status" },
+        { status: 400 },
+      );
+    }
+
+    const updatedStudent = await Student.findByIdAndUpdate(
+      id,
+      { status: nextStatus },
+      { new: true },
+    ).lean();
+
+    if (!updatedStudent) {
+      return NextResponse.json(
+        { success: false, message: "Student not found" },
+        { status: 404 },
+      );
+    }
+
+    return NextResponse.json(
+      { success: true, student: updatedStudent },
+      { status: 200 },
+    );
+  } catch (error) {
+    console.error(error);
+
+    return NextResponse.json(
+      { success: false, message: "Internal Server Error" },
+      { status: 500 },
+    );
+  }
+}
+
 export async function POST(req: Request) {
   try {
     await dbConnect();
@@ -55,6 +105,7 @@ export async function POST(req: Request) {
       rollNo,
       paymentProofUrl,
       validateOnly,
+      status,
     } = body;
 
     const hasValidRollNo =
@@ -126,6 +177,7 @@ export async function POST(req: Request) {
       year,
       rollNo,
       paymentProofUrl,
+      status: status || "unchecked",
     });
 
     return NextResponse.json(

@@ -2,6 +2,8 @@ import fetchHandler from "./fetchHandler";
 
 const API_URL = "/api";
 
+type StudentStatus = "confirmed" | "unchecked" | "rejected";
+
 interface RegisterPayload {
   name: string;
   email: string;
@@ -13,6 +15,7 @@ interface RegisterPayload {
   };
   paymentProofUrl?: string;
   validateOnly?: boolean;
+  status?: StudentStatus;
 }
 
 export const api = {

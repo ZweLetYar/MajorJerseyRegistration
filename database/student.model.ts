@@ -12,6 +12,7 @@ export interface IStudent extends Document {
   };
 
   paymentProofUrl?: string;
+  status: "confirmed" | "unchecked" | "rejected";
 
   createdAt: Date;
   updatedAt: Date;
@@ -40,6 +41,12 @@ const StudentSchema = new Schema<IStudent>(
     },
 
     paymentProofUrl: { type: String, default: "" },
+    status: {
+      type: String,
+      enum: ["confirmed", "unchecked", "rejected"],
+      default: "unchecked",
+      required: true,
+    },
   },
   { timestamps: true },
 );
