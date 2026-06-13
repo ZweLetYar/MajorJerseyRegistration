@@ -6,7 +6,10 @@ export interface IStudent extends Document {
   email: string;
   phone: string;
   year: string;
-  rollNo: string;
+  rollNo: {
+    rollPrefix: string;
+    rollNumber: number;
+  };
 
   paymentProofUrl?: string;
 
@@ -27,7 +30,14 @@ const StudentSchema = new Schema<IStudent>(
     },
     phone: { type: String, required: true, trim: true },
     year: { type: String, required: true, trim: true },
-    rollNo: { type: String, required: true, unique: true, trim: true },
+    rollNo: {
+      type: {
+        rollPrefix: { type: String, required: true, trim: true },
+        rollNumber: { type: Number, required: true, min: 1, max: 150 },
+      },
+      required: true,
+      default: { rollPrefix: "", rollNumber: 1 },
+    },
 
     paymentProofUrl: { type: String, default: "" },
   },
