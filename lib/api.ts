@@ -11,7 +11,8 @@ interface RegisterPayload {
     rollPrefix: string;
     rollNumber: number;
   };
-  paymentProofUrl: string;
+  paymentProofUrl?: string;
+  validateOnly?: boolean;
 }
 
 export const api = {
@@ -29,6 +30,12 @@ export const api = {
       fetchHandler(`${API_URL}/register`, {
         method: "POST",
         body: JSON.stringify(data),
+      }),
+
+    validate: (data: RegisterPayload) =>
+      fetchHandler(`${API_URL}/register`, {
+        method: "POST",
+        body: JSON.stringify({ ...data, validateOnly: true }),
       }),
   },
 };

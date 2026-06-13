@@ -33,11 +33,30 @@ export default async function fetchHandler(
   try {
     const res = await fetch(url, config);
     clearTimeout(id);
+
+    const contentType = res.headers.get("content-type") || "";
+    const isJson = contentType.includes("application/json");
+    const payload = isJson
+      ? await res.json().catch(() => null)
+      : await res.text().catch(() => null);
+
     if (!res.ok) {
-      throw new Error("HTTP ERROR");
+      if (payload && typeof payload === "object") {
+        return {
+          success: false,
+          ...(payload as Record<string, unknown>),
+          status: (payload as { status?: number }).status ?? res.status,
+        };
+      }
+
+      return {
+        success: false,
+        message: "Request failed",
+        status: res.status,
+      };
     }
 
-    return await res.json();
+    return payload ?? { success: true };
   } catch (e) {
     return handleErrorResponse(e);
   }

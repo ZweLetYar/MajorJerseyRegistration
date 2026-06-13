@@ -54,6 +54,7 @@ export async function POST(req: Request) {
 
       rollNo,
       paymentProofUrl,
+      validateOnly,
     } = body;
 
     const hasValidRollNo =
@@ -63,6 +64,8 @@ export async function POST(req: Request) {
       rollNo.rollNumber >= 1 &&
       rollNo.rollNumber <= 150;
 
+    const shouldValidateOnly = validateOnly === true;
+
     // Validation
     if (
       !name ||
@@ -70,7 +73,7 @@ export async function POST(req: Request) {
       !phone ||
       !year ||
       !hasValidRollNo ||
-      !paymentProofUrl
+      (!shouldValidateOnly && !paymentProofUrl)
     ) {
       return NextResponse.json(
         { message: "All fields are required" },
@@ -86,26 +89,33 @@ export async function POST(req: Request) {
       );
     }
 
-    // Duplicate roll number
+    // Duplicate roll number (unique per selected year group)
     const existingRoll = await Student.findOne({
-      "rollNo.rollPrefix": rollNo.rollPrefix,
+      year,
       "rollNo.rollNumber": rollNo.rollNumber,
     });
 
     if (existingRoll) {
       return NextResponse.json(
-        { message: "Roll number already registered" },
+        { success: false, message: "Roll number already registered" },
         { status: 409 },
       );
     }
 
     // Duplicate email
-    const existingEmail = await Student.findOne({ email });
+    const existingEmail = await Student.findOne({ email: email.toLowerCase() });
 
     if (existingEmail) {
       return NextResponse.json(
-        { message: "Email already registered" },
+        { success: false, message: "Email already registered" },
         { status: 409 },
+      );
+    }
+
+    if (shouldValidateOnly) {
+      return NextResponse.json(
+        { success: true, message: "Registration details look good." },
+        { status: 200 },
       );
     }
 
