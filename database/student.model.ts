@@ -51,6 +51,8 @@ const StudentSchema = new Schema<IStudent>(
   { timestamps: true },
 );
 
+StudentSchema.index({ year: 1, "rollNo.rollNumber": 1 }, { unique: false });
+
 const StudentModel =
   (mongoose.models.Student as Model<IStudent>) ||
   mongoose.model<IStudent>("Student", StudentSchema);

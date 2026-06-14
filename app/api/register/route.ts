@@ -1,8 +1,28 @@
 import dbConnect from "@/lib/dbConnect";
 import Student from "@/lib/models/Student";
+import {
+  checkRateLimit,
+  createRateLimitResponse,
+  getRequestIdentifier,
+} from "@/lib/rateLimit";
 import { NextResponse } from "next/server";
 
+const REQUEST_LIMIT = 60;
+const REQUEST_WINDOW_MS = 60 * 1000;
+
+export const maxDuration = 10;
+
 export async function GET(req: Request) {
+  const rateLimit = checkRateLimit(
+    `register:get:${getRequestIdentifier(req)}`,
+    REQUEST_LIMIT,
+    REQUEST_WINDOW_MS,
+  );
+
+  if (!rateLimit.allowed) {
+    return createRateLimitResponse();
+  }
+
   try {
     await dbConnect();
 
@@ -41,6 +61,16 @@ export async function GET(req: Request) {
 }
 
 export async function PATCH(req: Request) {
+  const rateLimit = checkRateLimit(
+    `register:patch:${getRequestIdentifier(req)}`,
+    REQUEST_LIMIT,
+    REQUEST_WINDOW_MS,
+  );
+
+  if (!rateLimit.allowed) {
+    return createRateLimitResponse();
+  }
+
   try {
     await dbConnect();
 
@@ -91,6 +121,16 @@ export async function PATCH(req: Request) {
 }
 
 export async function POST(req: Request) {
+  const rateLimit = checkRateLimit(
+    `register:post:${getRequestIdentifier(req)}`,
+    REQUEST_LIMIT,
+    REQUEST_WINDOW_MS,
+  );
+
+  if (!rateLimit.allowed) {
+    return createRateLimitResponse();
+  }
+
   try {
     await dbConnect();
 
@@ -141,10 +181,15 @@ export async function POST(req: Request) {
     }
 
     // Duplicate roll number (unique per selected year group)
-    const existingRoll = await Student.findOne({
-      year,
-      "rollNo.rollNumber": rollNo.rollNumber,
-    });
+    const existingRoll = await Promise.race([
+      Student.findOne({
+        year,
+        "rollNo.rollNumber": rollNo.rollNumber,
+      }),
+      new Promise((_, reject) =>
+        setTimeout(() => reject(new Error("Database lookup timed out")), 4000),
+      ),
+    ]);
 
     if (existingRoll) {
       return NextResponse.json(
@@ -154,7 +199,12 @@ export async function POST(req: Request) {
     }
 
     // Duplicate email
-    const existingEmail = await Student.findOne({ email: email.toLowerCase() });
+    const existingEmail = await Promise.race([
+      Student.findOne({ email: email.toLowerCase() }),
+      new Promise((_, reject) =>
+        setTimeout(() => reject(new Error("Database lookup timed out")), 4000),
+      ),
+    ]);
 
     if (existingEmail) {
       return NextResponse.json(

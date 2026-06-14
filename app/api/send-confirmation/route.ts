@@ -1,7 +1,27 @@
 import { NextRequest, NextResponse } from "next/server";
 import nodemailer from "nodemailer";
+import {
+  checkRateLimit,
+  createRateLimitResponse,
+  getRequestIdentifier,
+} from "@/lib/rateLimit";
+
+const REQUEST_LIMIT = 20;
+const REQUEST_WINDOW_MS = 60 * 1000;
+
+export const maxDuration = 10;
 
 export async function POST(req: NextRequest) {
+  const rateLimit = checkRateLimit(
+    `email:confirm:${getRequestIdentifier(req)}`,
+    REQUEST_LIMIT,
+    REQUEST_WINDOW_MS,
+  );
+
+  if (!rateLimit.allowed) {
+    return createRateLimitResponse();
+  }
+
   try {
     const { to, name, year, rollNo } = await req.json();
 
@@ -32,24 +52,37 @@ export async function POST(req: NextRequest) {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,
       },
+      connectionTimeout: 5000,
+      greetingTimeout: 5000,
+      socketTimeout: 10000,
     });
-    //@ts-ignore
-    await transporter.verify();
+    await Promise.race([
+      (
+        transporter as typeof transporter & { verify: () => Promise<void> }
+      ).verify(),
+      new Promise((_, reject) =>
+        setTimeout(
+          () => reject(new Error("Email verification timed out")),
+          5000,
+        ),
+      ),
+    ]);
 
-    await transporter.sendMail({
-      //@ts-ignore
-      from: {
-        name: fromName,
-        address: fromAddress,
-      },
-      replyTo: {
-        name: fromName,
-        address: replyToAddress,
-      },
-      to,
-      subject: "Registration Confirmed",
-      text: `Hello ${name}, your registration is confirmed. Year: ${year}, Roll: ${rollNo}`,
-      html: `
+    await Promise.race([
+      transporter.sendMail({
+        //@ts-ignore
+        from: {
+          name: fromName,
+          address: fromAddress,
+        },
+        replyTo: {
+          name: fromName,
+          address: replyToAddress,
+        },
+        to,
+        subject: "Registration Confirmed",
+        text: `Hello ${name}, your registration is confirmed. Year: ${year}, Roll: ${rollNo}`,
+        html: `
         <div style="font-family: Arial, sans-serif; background-color: #f8fafc; padding: 24px; color: #111827;">
           <div style="max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 6px 20px rgba(0,0,0,0.06);">
             <div style="background: linear-gradient(90deg, #1d4ed8 0%, #2563eb 100%); padding: 24px 32px; color: #ffffff;">
@@ -71,11 +104,15 @@ export async function POST(req: NextRequest) {
           </div>
         </div>
       `,
-      headers: {
-        "Auto-Submitted": "auto-generated",
-        "X-Auto-Response-Suppress": "OOF, RN, NRN, AutoReply",
-      },
-    });
+        headers: {
+          "Auto-Submitted": "auto-generated",
+          "X-Auto-Response-Suppress": "OOF, RN, NRN, AutoReply",
+        },
+      }),
+      new Promise((_, reject) =>
+        setTimeout(() => reject(new Error("Email send timed out")), 10000),
+      ),
+    ]);
 
     return NextResponse.json({
       success: true,
