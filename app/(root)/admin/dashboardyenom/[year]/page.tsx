@@ -121,7 +121,7 @@ function Page() {
       <div className="mx-auto max-w-6xl">
         <div className="mb-4 flex items-center justify-between">
           <Link
-            href="/admin/dashboard"
+            href="/admin/dashboardyenom"
             className="text-sm font-medium text-blue-900 hover:underline"
           >
             ← Back to overview

@@ -119,7 +119,7 @@ export default function RegisterForm() {
 
   return (
     <div className=" flex flex-col items-center justify-center ">
-      <div className="w-full h-full max-w-sm bg-white rounded-2xl shadow-lg p-6 mt-10">
+      <div className="w-full h-full max-w-sm bg-white rounded-2xl shadow-lg p-7 mt-10">
         <h1 className="text-xl font-bold text-center text-blue-900">
           Major Jacket Registration
         </h1>
