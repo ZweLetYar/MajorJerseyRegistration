@@ -33,6 +33,7 @@ export async function POST(req: NextRequest) {
         pass: process.env.EMAIL_PASS,
       },
     });
+
     //@ts-ignore
     await transporter.verify();
 
@@ -47,27 +48,57 @@ export async function POST(req: NextRequest) {
         address: replyToAddress,
       },
       to,
-      subject: "Registration Confirmed",
-      text: `Hello ${name}, your registration is confirmed. Year: ${year}, Roll: ${rollNo}`,
+      subject: "Registration Status Update",
+      text: `Hello ${name}, we regret to inform you that your registration for the IST Major Jacket could not be approved. Year: ${year}, Roll: ${rollNo}.`,
       html: `
         <div style="font-family: Arial, sans-serif; background-color: #f8fafc; padding: 24px; color: #111827;">
           <div style="max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 6px 20px rgba(0,0,0,0.06);">
-            <div style="background: linear-gradient(90deg, #1d4ed8 0%, #2563eb 100%); padding: 24px 32px; color: #ffffff;">
-              <h2 style="margin: 0; font-size: 24px;">Registration Confirmed</h2>
-              <p style="margin: 6px 0 0; font-size: 14px; opacity: 0.95;">Thank you for registering for the IST Major Jacket.</p>
+            
+            <div style="background: linear-gradient(90deg, #dc2626 0%, #ef4444 100%); padding: 24px 32px; color: #ffffff;">
+              <h2 style="margin: 0; font-size: 24px;">
+                Registration Not Approved
+              </h2>
+              <p style="margin: 6px 0 0; font-size: 14px; opacity: 0.95;">
+                IST Major Jacket Registration System
+              </p>
             </div>
+
             <div style="padding: 32px;">
-              <p style="margin: 0 0 12px; font-size: 16px;">Hello ${name},</p>
-              <p style="margin: 0 0 16px; font-size: 15px; line-height: 1.7;">Your registration has been received and confirmed successfully.</p>
-              <div style="background: #f8fafc; border-left: 4px solid #1d4ed8; padding: 14px 16px; border-radius: 8px; margin-bottom: 18px;">
-                <p style="margin: 0 0 6px; font-size: 14px;"><strong>Year:</strong> ${year}</p>
-                <p style="margin: 0; font-size: 14px;"><strong>Roll No:</strong> ${rollNo}</p>
+              <p style="margin: 0 0 12px; font-size: 16px;">
+                Hello ${name},
+              </p>
+
+              <p style="margin: 0 0 16px; font-size: 15px; line-height: 1.7;">
+                Thank you for your interest in registering for the IST Major Jacket.
+                After reviewing your submission, we regret to inform you that your
+                registration could not be approved at this time.
+              </p>
+
+              <div style="background: #fef2f2; border-left: 4px solid #dc2626; padding: 14px 16px; border-radius: 8px; margin-bottom: 18px;">
+                <p style="margin: 0 0 6px; font-size: 14px;">
+                  <strong>Year:</strong> ${year}
+                </p>
+                <p style="margin: 0; font-size: 14px;">
+                  <strong>Roll No:</strong> ${rollNo}
+                </p>
               </div>
-              <p style="margin: 0; font-size: 15px; line-height: 1.7;">Please keep this email for your records. We will be in touch with further updates if needed.</p>
+
+              <p style="margin: 0 0 16px; font-size: 15px; line-height: 1.7;">
+                If you believe there has been a mistake or require additional
+                information, please contact the organizing team.
+              </p>
+
+              <p style="margin: 0; font-size: 15px; line-height: 1.7;">
+                We appreciate your understanding.
+              </p>
             </div>
+
             <div style="background: #f8fafc; padding: 16px 32px; text-align: center; font-size: 12px; color: #6b7280;">
-              <p style="margin: 0;">IST Major Jacket Registration System</p>
+              <p style="margin: 0;">
+                IST Major Jacket Registration System
+              </p>
             </div>
+
           </div>
         </div>
       `,
@@ -79,7 +110,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      message: "Confirmation email sent",
+      message: "Rejection email sent",
     });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unknown error";
@@ -88,7 +119,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(
       {
         success: false,
-        message: `Failed to send confirmation email: ${message}`,
+        message: `Failed to send rejection email: ${message}`,
       },
       { status: 500 },
     );

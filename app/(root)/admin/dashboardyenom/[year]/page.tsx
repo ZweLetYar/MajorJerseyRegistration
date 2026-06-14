@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
+import { toast } from "sonner";
 
 type Student = {
   _id: string;
@@ -96,8 +97,8 @@ function Page() {
     }
   };
 
-  const sendMail = async (student: Student) => {
-    await fetch("/api/send-confirmation", {
+  const sendConfirmation = async (student: Student) => {
+    const response = await fetch("/api/send-confirmation", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -109,11 +110,59 @@ function Page() {
         rollNo: `${student.rollNo.rollPrefix}-${student.rollNo.rollNumber}`,
       }),
     });
+
+    const data = await response.json();
+
+    if (!response.ok || !data?.success) {
+      throw new Error(data?.message || "Failed to send confirmation email");
+    }
+  };
+
+  const sendRejectionMail = async (student: Student) => {
+    const response = await fetch("/api/send-rejection", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        to: student.email,
+        name: student.name,
+        year: student.year,
+        rollNo: `${student.rollNo.rollPrefix}-${student.rollNo.rollNumber}`,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok || !data?.success) {
+      throw new Error(data?.message || "Failed to send rejection email");
+    }
   };
 
   const handleConfirm = async (student: Student) => {
-    await handleStatusChange(student._id, "confirmed");
-    await sendMail(student);
+    try {
+      await handleStatusChange(student._id, "confirmed");
+      await sendConfirmation(student);
+      toast.success(`Confirmation email sent to ${student.name}`);
+    } catch (err) {
+      const message =
+        err instanceof Error ? err.message : "Failed to confirm student";
+      setError(message);
+      toast.error(message);
+    }
+  };
+
+  const handleReject = async (student: Student) => {
+    try {
+      await handleStatusChange(student._id, "rejected");
+      await sendRejectionMail(student);
+      toast.success(`Rejection email sent to ${student.name}`);
+    } catch (err) {
+      const message =
+        err instanceof Error ? err.message : "Failed to reject student";
+      setError(message);
+      toast.error(message);
+    }
   };
 
   return (
@@ -217,18 +266,18 @@ function Page() {
                           type="button"
                           onClick={() => handleConfirm(student)}
                           disabled={updatingId === student._id}
-                          className="rounded-lg bg-emerald-600 px-3 py-2 text-xs font-semibold text-white transition hover:bg-emerald-700 disabled:cursor-not-allowed disabled:bg-emerald-400"
+                          className="flex items-center gap-2 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-2.5 text-xs font-semibold text-emerald-700 transition-all duration-200 hover:border-emerald-300 hover:bg-emerald-100 hover:shadow-sm active:scale-95"
                         >
+                          <span>✓</span>
                           Confirm
                         </button>
                         <button
                           type="button"
-                          onClick={() =>
-                            handleStatusChange(student._id, "rejected")
-                          }
+                          onClick={() => handleReject(student)}
                           disabled={updatingId === student._id}
-                          className="rounded-lg bg-rose-600 px-3 py-2 text-xs font-semibold text-white transition hover:bg-rose-700 disabled:cursor-not-allowed disabled:bg-rose-400"
+                          className="flex items-center gap-2 rounded-xl border border-rose-200 bg-rose-50 px-4 py-2.5 text-xs font-semibold text-rose-700 transition-all duration-200 hover:border-rose-300 hover:bg-rose-100 hover:shadow-sm active:scale-95"
                         >
+                          <span>✕</span>
                           Reject
                         </button>
                       </div>
