@@ -105,6 +105,29 @@ function Page() {
     }
   };
 
+  //first 30 registrants
+
+  const oldest30Students = useMemo(() => {
+    return [...students]
+      .sort(
+        (a, b) =>
+          new Date(a.createdAt || 0).getTime() -
+          new Date(b.createdAt || 0).getTime(),
+      )
+      .slice(0, 30);
+  }, [students]);
+
+  const pageSize = 5;
+  const [page, setPage] = useState(1);
+
+  const paginatedStudents = useMemo(() => {
+    const reversed = [...oldest30Students].reverse();
+    const start = (page - 1) * pageSize;
+    return reversed.slice(start, start + pageSize);
+  }, [oldest30Students, page]);
+
+  const totalPages = Math.ceil(oldest30Students.length / pageSize);
+
   return (
     <div className="min-h-screen  px-3 py-4 text-slate-800 sm:px-4 sm:py-6">
       <div className="mx-auto flex max-w-7xl flex-col gap-4 lg:flex-row">
@@ -222,6 +245,67 @@ function Page() {
                     </p>
                   </Link>
                 ))}
+              </div>
+
+              <div className="rounded-2xl bg-white p-4 shadow-sm sm:p-6 mt-4">
+                <div className="mb-4 flex items-center justify-between">
+                  <h2 className="text-lg font-semibold text-blue-900">
+                    Recent Registrants
+                  </h2>
+
+                  <span className="text-xs text-slate-500">
+                    the first 30 registrants
+                  </span>
+                </div>
+
+                {/* List */}
+                <div className="space-y-2">
+                  {paginatedStudents.map((student) => (
+                    <div
+                      key={student._id}
+                      className="flex items-center justify-between rounded-xl border border-slate-200 px-3 py-2"
+                    >
+                      <div>
+                        <p className="text-sm font-medium text-slate-800">
+                          {student.name}
+                        </p>
+                        <p className="text-xs text-slate-500">
+                          Year: {student.year}
+                        </p>
+                      </div>
+
+                      <div className="text-right">
+                        <p className="text-sm font-semibold text-blue-900">
+                          {student.rollNo?.rollPrefix}-
+                          {student.rollNo?.rollNumber}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Pagination */}
+                <div className="mt-4 flex items-center justify-between">
+                  <button
+                    onClick={() => setPage((p) => Math.max(1, p - 1))}
+                    disabled={page === 1}
+                    className="rounded-lg border border-slate-200 px-3 py-1 text-sm disabled:opacity-40"
+                  >
+                    Previous
+                  </button>
+
+                  <span className="text-xs text-slate-500">
+                    Page {page} of {totalPages || 1}
+                  </span>
+
+                  <button
+                    onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                    disabled={page === totalPages}
+                    className="rounded-lg border border-slate-200 px-3 py-1 text-sm disabled:opacity-40"
+                  >
+                    Next
+                  </button>
+                </div>
               </div>
             </section>
           )}

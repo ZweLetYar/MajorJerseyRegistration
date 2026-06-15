@@ -30,8 +30,8 @@ export default function SuccessPage() {
           <span className=" text-blue-800">
             (Please also check your spam folder)
           </span>
-          . We have a plan to give a present to the registrants 🥳, so please
-          wait for the announcement. Thank you for registering!
+          . We have a plan to give a present to the first 30 registrants 🥳, so
+          please wait for the announcement. Thank you for registering!
         </p>
 
         <div className="mt-6 rounded-2xl border border-slate-200 bg-slate-50 p-4 text-left">
