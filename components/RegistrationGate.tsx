@@ -8,7 +8,7 @@ export default function RegistrationGate({
 }: {
   children: React.ReactNode;
 }) {
-  const targetDate = new Date("2026-06-16T12:00:01").getTime();
+  const targetDate = new Date("2026-06-16T12:30:01").getTime();
 
   const [isOpen, setIsOpen] = useState(false);
 

@@ -30,7 +30,7 @@ export default function SuccessPage() {
           <span className=" text-blue-800">
             (Please also check your spam folder)
           </span>
-          . We have a plan to give a present to the first 30 registrants 🥳, so
+          . We have a plan to give a present to the first 20 registrants 🥳, so
           please wait for the announcement. Thank you for registering!
         </p>
 

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import TableSkeleton from "./TableSkeleton";
 
 export default function CountDownTimer() {
-  const targetDate = new Date("2026-06-16T12:00:01").getTime();
+  const targetDate = new Date("2026-06-16T12:30:01").getTime();
 
   const [mounted, setMounted] = useState(false);
 
