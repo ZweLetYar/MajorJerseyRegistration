@@ -1,217 +1,73 @@
 "use client";
-
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { getQR } from "@/lib/qr";
-import { api } from "@/lib/api";
-
-export default function RegisterForm() {
-  const router = useRouter();
-
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    phone: "+95",
-    year: "",
-    rollNo: {
-      rollPrefix: "",
-      rollNumber: 1,
-    },
-  });
-  const [submitMessage, setSubmitMessage] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
-  ) => {
-    const { name, value } = e.target;
-
-    // Roll Number
-    if (name === "rollNumber") {
-      setForm((prev) => ({
-        ...prev,
-        rollNo: {
-          ...prev.rollNo,
-          rollNumber: Number(value),
-        },
-      }));
-      return;
-    }
-
-    // Year
-    if (name === "year") {
-      const map: Record<string, string> = {
-        "1st year": "1IST",
-        "2nd year": "2IST",
-        "3rd year": "3IST",
-        "4th year": "4IST",
-        "5th year(first sem)": "5IST",
-        "5th year(second sem)": "5IST",
-        "6th year": "6IST",
-      };
-
-      setForm((prev) => ({
-        ...prev,
-        year: value,
-        rollNo: {
-          ...prev.rollNo,
-          rollPrefix: map[value] || "",
-        },
-      }));
-      return;
-    }
-
-    // Phone
-    if (name === "phone") {
-      setForm((prev) => ({
-        ...prev,
-        phone: value.startsWith("+95") ? value : "+95",
-      }));
-      return;
-    }
-
-    // Other fields
-    setForm((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setSubmitMessage("");
-
-    if (form.rollNo.rollNumber > 150) {
-      setSubmitMessage("Roll number cannot exceed 150");
-      return;
-    }
-
-    if (!form.rollNo.rollPrefix) {
-      setSubmitMessage("Please select your year first.");
-      return;
-    }
-
-    try {
-      setIsSubmitting(true);
-
-      const response = await api.registrants.validate({
-        ...form,
-        paymentProofUrl: "",
-      });
-
-      if (!response?.success) {
-        setSubmitMessage(response?.message || "Unable to continue.");
-        return;
-      }
-
-      sessionStorage.setItem("registration", JSON.stringify(form));
-
-      const qr = getQR(form.year);
-
-      router.push(`/payment/${qr}`);
-    } catch (error) {
-      console.error(error);
-      setSubmitMessage("Something went wrong while checking your details.");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
+export default function page() {
   return (
-    <div className=" flex flex-col items-center justify-center ">
-      <div className="w-full h-full max-w-sm bg-white rounded-2xl shadow-lg p-7 mt-10">
-        <h1 className="text-xl font-bold text-center text-blue-900">
-          Major Jacket Registration
-        </h1>
+    <main className="relative flex  items-center justify-center overflow-hidden bg-[#0B1120] px-6 py-10">
+      {/* Background */}
+      {/* <div className="absolute inset-0">
+        <div className="absolute left-1/2 top-20 h-72 w-72 -translate-x-1/2 rounded-full bg-indigo-500/20 blur-[120px]" />
+        <div className="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-cyan-500/10 blur-[140px]" />
+      </div> */}
 
-        <p className="text-sm text-gray-500 text-center mb-6">
-          Enter your details
-        </p>
-
-        <form onSubmit={handleSubmit} className="space-y-3">
-          <input
-            name="name"
-            placeholder="Full Name"
-            value={form.name}
-            onChange={handleChange}
-            className="w-full p-3 border rounded-lg text-sm"
-            required
-          />
-
-          <input
-            name="email"
-            type="email"
-            placeholder="Email"
-            value={form.email}
-            onChange={handleChange}
-            className="w-full p-3 border rounded-lg text-sm"
-            required
-          />
-
-          <input
-            name="phone"
-            type="tel"
-            value={form.phone}
-            onChange={handleChange}
-            className="w-full p-3 border rounded-lg text-sm"
-            required
-          />
-
-          <select
-            name="year"
-            value={form.year}
-            onChange={handleChange}
-            className="w-full p-3 border rounded-lg text-sm"
-            required
+      <div className="relative w-full max-w-sm rounded-3xl border border-white/10 bg-white/[0.03] p-8 backdrop-blur-xl">
+        {/* Animated Icon */}
+        <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500 to-cyan-500 shadow-lg shadow-indigo-500/20">
+          <svg
+            className="h-10 w-10 text-red-900 animate-pulse"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            viewBox="0 0 24 24"
           >
-            <option value="">Select Year</option>
-            <option value="1st year">1st Year</option>
-            <option value="2nd year">2nd Year</option>
-            <option value="3rd year">3rd Year</option>
-            <option value="4th year">4th Year</option>
-            <option value="5th year(first sem)">5th Year (first sem)</option>
-            <option value="5th year(second sem)">5th Year (second sem)</option>
-            <option value="6th year">6th Year</option>
-          </select>
-
-          <div className="flex gap-2">
-            <input
-              value={form.rollNo.rollPrefix}
-              placeholder="Roll No."
-              readOnly
-              className="w-[60%] p-3 border rounded-lg text-sm bg-gray-100"
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M12 8v5m0 4h.01M10.29 3.86L1.82 18A2 2 0 003.53 21h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"
             />
+          </svg>
+        </div>
 
-            <input
-              name="rollNumber"
-              type="number"
-              min={1}
-              max={150}
-              // value={form.rollNo.rollNumber}
-              onChange={handleChange}
-              placeholder="(e.g. 1, 34, 99)"
-              className="w-[40%] p-3 border rounded-lg text-sm"
-              required
-            />
+        <div className="mt-8 text-center">
+          <span className="inline-flex items-center gap-2 rounded-full border border-indigo-400/20 bg-indigo-400/10 px-3 py-1 text-xs font-medium text-indigo-300">
+            <span className="h-2 w-2 animate-pulse rounded-full bg-green-400" />
+            Maintenance Mode
+          </span>
+
+          <h1 className="mt-5 text-3xl font-bold tracking-tight text-blue-700">
+            We'll be back soon.
+          </h1>
+
+          <p className="mt-4 text-sm leading-7 text-slate-400">
+            We're improving the registration system to provide a better
+            experience. Thank you for your patience.
+          </p>
+
+          <div className="mt-8 rounded-2xl border border-white/10 bg-white/[0.04] p-4 text-left">
+            <div className="flex justify-between text-sm">
+              <span className="text-slate-500">Status</span>
+              <span className="text-green-400 font-medium">● Updating</span>
+            </div>
+
+            <div className="mt-4 h-2 overflow-hidden rounded-full bg-white/10">
+              <div className="h-full w-2/3 animate-pulse rounded-full bg-gradient-to-r from-indigo-500 to-cyan-400"></div>
+            </div>
+
+            <p className="mt-3 text-xs text-slate-500">
+              Estimated completion: Soon
+            </p>
           </div>
 
-          {submitMessage ? (
-            <p className="text-sm text-red-500">{submitMessage}</p>
-          ) : null}
-
           <button
-            type="submit"
-            disabled={isSubmitting}
-            className="w-full bg-blue-900 text-white p-3 rounded-lg text-sm font-medium cursor-pointer hover:bg-blue-800 disabled:cursor-not-allowed disabled:bg-blue-700"
+            onClick={() => location.reload()}
+            className="mt-8 w-full rounded-2xl bg-white py-3 font-semibold text-slate-900 transition-all duration-300 hover:scale-[0.98] active:scale-95"
           >
-            {isSubmitting ? "Checking..." : "Register & Pay"}
+            Refresh Page
           </button>
-        </form>
+
+          <p className="mt-8 text-xs text-slate-500">
+            Thank you for your understanding ❤️
+          </p>
+        </div>
       </div>
-      <p className="text-xs font-medium text-center text-blue-700 mt-6 w-[90%] max-w-sm leading-relaxed">
-        Jacket pricing may range from 38,500 MMK to 43,500 MMK depending on the
-        final registration quantity.
-      </p>
-    </div>
+    </main>
   );
 }
