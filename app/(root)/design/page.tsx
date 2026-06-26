@@ -7,8 +7,8 @@ export default function Page() {
   const router = useRouter();
 
   return (
-    <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 px-4">
-      <div className="w-full max-w-sm rounded-3xl border border-white/10 bg-white/5 p-5 backdrop-blur-xl shadow-2xl">
+    <main className="min-h-screen flex items-center justify-center  px-4">
+      <div className="w-full max-w-sm rounded-xl bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 border border-white/10 bg-white/5 p-5 backdrop-blur-xl shadow-2xl">
         {/* Image Section */}
         <div className="overflow-hidden rounded-2xl bg-black/20">
           <Image
@@ -32,7 +32,7 @@ export default function Page() {
 
         {/* Button */}
         <button
-          onClick={() => router.push("/next-page")}
+          onClick={() => router.push("/policy")}
           className="mt-6 w-full rounded-2xl bg-white py-3 font-semibold text-slate-900 transition active:scale-95 hover:bg-slate-200"
         >
           Go to Next Page →
