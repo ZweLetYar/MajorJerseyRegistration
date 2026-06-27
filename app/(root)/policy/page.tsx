@@ -13,8 +13,8 @@ export default function page() {
   };
 
   return (
-    <main className="min-h-screen  text-white flex items-center justify-center px-4 ">
-      <div className="w-full max-w-md rounded-xl border bg-[#0B1120] border-white/10  p-6 backdrop-blur-xl">
+    <main className="min-h-screen  text-white flex items-center justify-center mt-2 ">
+      <div className="w-full  rounded-xl border bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 border-white/10  p-6 backdrop-blur-xl">
         {/* Title */}
         <h1 className="text-2xl font-bold text-center">
           IST Jacket Pre-Order Policy

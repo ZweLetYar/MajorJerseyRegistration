@@ -7,8 +7,8 @@ export default function Page() {
   const router = useRouter();
 
   return (
-    <main className="min-h-screen flex items-center justify-center  px-4">
-      <div className="w-full max-w-sm rounded-xl bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 border border-white/10 bg-white/5 p-5 backdrop-blur-xl shadow-2xl">
+    <main className=" flex items-center justify-center ">
+      <div className="w-full  rounded-xl bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 border border-white/10 bg-white/5 p-5 backdrop-blur-xl shadow-2xl">
         {/* Image Section */}
         <div className="overflow-hidden rounded-2xl bg-black/20">
           <Image

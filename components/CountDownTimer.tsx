@@ -41,7 +41,7 @@ export default function CountDownTimer() {
   // ✅ IMPORTANT: prevent hydration mismatch
   if (!mounted || !timeLeft) {
     return (
-      <div className="w-full rounded-2xl border border-white bg-blue-50 p-4 text-center">
+      <div className="w-full rounded-2xl   p-4 text-center">
         <TableSkeleton />
       </div>
     );

@@ -12,6 +12,7 @@ type RegistrationData = {
   email: string;
   phone: string;
   year: string;
+  size: string;
   rollNo: { rollPrefix: string; rollNumber: number };
   status?: StudentStatus;
 };
@@ -24,6 +25,7 @@ function RegisterForm() {
     email: "",
     phone: "",
     year: "",
+    size: "",
     rollNo: { rollPrefix: "", rollNumber: 1 },
   });
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -118,7 +120,7 @@ function RegisterForm() {
           ? (JSON.parse(stored) as RegistrationData)
           : registration;
 
-      const response = await api.registrants.create({
+      const response = await api.orders.create({
         ...payloadData,
         paymentProofUrl: uploadedUrl,
         status: "unchecked",

@@ -43,7 +43,7 @@ export default function Header() {
               Information Science and Technology
             </h1>
             <p className="text-xs text-slate-400">
-              University of Technology (Yatanarpon Cyber City)
+              University of Technology (YCC)
             </p>
           </div>
         </div>
