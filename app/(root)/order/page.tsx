@@ -88,24 +88,19 @@ export default function RegisterForm() {
         paymentProofUrl: "",
       });
 
-      if (!response?.success && response?.message !== "Registrant") {
+      if (!response?.success) {
         setSubmitMessage(response?.message || "Unable to continue.");
         return;
       }
 
-      // Create the updated object before saving
       const updatedForm = {
         ...form,
-        isRegistrant: response?.message === "Registrant",
+        isRegistrant: response?.isRegistrant ?? false,
       };
 
-      // Update React state
       setForm(updatedForm);
 
-      // Save the updated data
       sessionStorage.setItem("registration", JSON.stringify(updatedForm));
-
-      console.log(updatedForm);
 
       const qr = getQR(updatedForm.year);
       router.push(`/payment/${qr}`);
@@ -120,7 +115,6 @@ export default function RegisterForm() {
   return (
     <div className="flex items-center justify-center px-4 mt-10">
       <div className="w-full max-w-sm rounded-3xl border border-white/10 bg-[#0f172a] p-7 shadow-2xl backdrop-blur-xl">
-        {/* Title */}
         <h1 className="text-xl font-semibold text-center text-white">
           Major Jacket Order
         </h1>
@@ -130,13 +124,12 @@ export default function RegisterForm() {
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-3">
-          {/* INPUTS */}
           <input
             name="name"
             placeholder="Full Name"
             value={form.name}
             onChange={handleChange}
-            className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-slate-500 focus:border-indigo-500 focus:outline-none"
+            className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white"
             required
           />
 
@@ -146,7 +139,7 @@ export default function RegisterForm() {
             placeholder="Email"
             value={form.email}
             onChange={handleChange}
-            className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-slate-500 focus:border-indigo-500 focus:outline-none"
+            className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white"
             required
           />
 
@@ -155,72 +148,44 @@ export default function RegisterForm() {
             type="tel"
             value={form.phone}
             onChange={handleChange}
-            className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white focus:border-indigo-500 focus:outline-none"
+            className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white"
             required
           />
 
-          {/* YEAR */}
           <select
             name="year"
             value={form.year}
             onChange={handleChange}
-            className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white focus:border-indigo-500 focus:outline-none"
+            className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white"
             required
           >
-            <option value="" className="text-black">
-              Select Year
-            </option>
-            <option value="1st year" className="text-black">
-              1st Year
-            </option>
-            <option value="2nd year" className="text-black">
-              2nd Year
-            </option>
-            <option value="3rd year" className="text-black">
-              3rd Year
-            </option>
-            <option value="4th year" className="text-black">
-              4th Year
-            </option>
-            <option value="5th year(first sem)" className="text-black">
-              5th Year (first sem)
-            </option>
-            <option value="5th year(second sem)" className="text-black">
-              5th Year (second sem)
-            </option>
-            <option value="6th year" className="text-black">
-              6th Year
-            </option>
+            <option value="">Select Year</option>
+            <option value="1st year">1st Year</option>
+            <option value="2nd year">2nd Year</option>
+            <option value="3rd year">3rd Year</option>
+            <option value="4th year">4th Year</option>
+            <option value="5th year(first sem)">5th Year (1st)</option>
+            <option value="5th year(second sem)">5th Year (2nd)</option>
+            <option value="6th year">6th Year</option>
           </select>
 
-          {/* SIZE */}
           <select
             name="size"
             value={form.size}
             onChange={handleChange}
-            className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white focus:border-indigo-500 focus:outline-none"
+            className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white"
             required
           >
-            <option value="" className="text-black">
-              Select Size
-            </option>
-            <option value="M" className="text-black">
-              M
-            </option>
-            <option value="L" className="text-black">
-              L
-            </option>
-            <option value="XL" className="text-black">
-              XL
-            </option>
+            <option value="">Select Size</option>
+            <option value="M">M</option>
+            <option value="L">L</option>
+            <option value="XL">XL</option>
           </select>
 
-          {/* ROLL */}
           <div className="flex gap-2">
             <input
               value={form.rollNo.rollPrefix}
               readOnly
-              placeholder="Roll No."
               className="w-[60%] rounded-xl border border-white/10 bg-white/10 px-4 py-3 text-sm text-slate-300"
             />
 
@@ -230,22 +195,19 @@ export default function RegisterForm() {
               min={1}
               max={150}
               onChange={handleChange}
-              placeholder="(e.g. 1, 34, 99)"
-              className="w-[40%] rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white focus:border-indigo-500 focus:outline-none"
+              className="w-[40%] rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white"
               required
             />
           </div>
 
-          {/* ERROR */}
           {submitMessage && (
             <p className="text-sm text-red-400">{submitMessage}</p>
           )}
 
-          {/* BUTTON */}
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full rounded-xl bg-indigo-600 py-3 text-sm font-semibold text-white transition hover:bg-indigo-500 disabled:bg-indigo-800"
+            className="w-full rounded-xl bg-indigo-600 py-3 text-sm font-semibold text-white"
           >
             {isSubmitting ? "Checking..." : "Order & Pay"}
           </button>

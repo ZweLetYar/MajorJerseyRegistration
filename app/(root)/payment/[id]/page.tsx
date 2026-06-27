@@ -2,20 +2,29 @@ import DynamicPaymentAmount from "@/components/DynamicPaymentAmount";
 import PaymentDetails from "@/components/PaymentDetails";
 import RegisterForm from "@/components/RegisterForm";
 
-export default async function page({ params }: { params: { id: string } }) {
+export default async function Page({ params }: { params: { id: string } }) {
   const { id } = await params;
 
   return (
-    <div className="w-full h-full flex flex-col items-center justify-center">
-      <div className="w-full max-w-sm bg-white rounded-2xl shadow-lg p-6 mt-10 flex flex-col text-center items-center justify-center">
-        <DynamicPaymentAmount />
-        <PaymentDetails id={id} />
+    <div className="min-h-screen w-full flex items-center justify-center  px-4 py-5">
+      <div className="w-full max-w-md rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-2xl shadow-black/40 p-8">
+        <div className="flex flex-col items-center text-center space-y-5">
+          <DynamicPaymentAmount />
 
-        <h1 className="text-xs text-red-500 mt-2">
-          *You need to upload a payment screenshot*
-        </h1>
+          <div className="w-full rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <PaymentDetails id={id} />
+          </div>
 
-        <RegisterForm />
+          <div className="w-full rounded-xl border border-red-500/20 bg-red-500/10 px-4 py-3">
+            <p className="text-xs font-medium text-red-400">
+              * You need to upload a payment screenshot.
+            </p>
+          </div>
+
+          <div className="w-full pt-2">
+            <RegisterForm />
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -26,26 +26,26 @@ export default function PaymentDetails({ id }: { id: string }) {
   return (
     <div className="w-full space-y-3">
       <div className="flex flex-col items-center justify-center gap-3">
-        <Image src={`/${id}`} alt={id} width={150} height={70} className="" />
+        <Image src={`/${id}`} alt={id} width={170} height={80} className="" />
 
         <a
           href={`/${id}`}
           download={id}
-          className="inline-flex w-[85%] items-center justify-center rounded-lg bg-blue-700 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-800"
+          className="inline-flex w-[85%] items-center justify-center rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-800"
         >
           Save QR
         </a>
       </div>
       <div className="h-px w-[90%] mx-auto bg-slate-200" />
-      <div className="rounded-xl border border-slate-200 bg-slate-50 p-3 text-left w-[90%] mx-auto">
+      <div className="rounded-xl   bg-slate-900 p-3 text-left w-[90%] mx-auto">
         <div className="mt-1 flex items-center justify-between gap-2">
-          <span className="text-sm font-semibold text-blue-900 ms-2">
+          <span className="text-sm font-semibold text-white ms-2">
             {phoneNumber}
           </span>
           <button
             type="button"
             onClick={handleCopy}
-            className="flex rounded-md border items-center justify-center border-blue-900 h-8 p-2 text-xs font-semibold text-blue-900 transition hover:bg-blue-900 hover:text-white"
+            className="flex rounded-md border items-center justify-center border-blue-900 h-8 p-2 text-xs font-semibold text-white transition hover:bg-blue-900 hover:text-white"
           >
             {copied ? (
               "Copied!"

@@ -2,9 +2,10 @@ import Link from "next/link";
 
 export default function SuccessPage() {
   return (
-    <div className="flex  items-center justify-center bg-slate-50 px-4  py-10">
-      <div className="w-full max-w-md rounded-3xl border border-slate-200 bg-white p-8 text-center shadow-xl shadow-slate-200/70">
-        <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-emerald-100 text-emerald-600">
+    <div className=" flex items-center justify-center  px-4 py-3">
+      <div className="w-full max-w-md rounded-3xl border border-white/10 bg-white/5 p-8 text-center shadow-2xl shadow-black/40 backdrop-blur-xl">
+        {/* Icon */}
+        <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-400 ring-1 ring-emerald-500/20">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -21,33 +22,38 @@ export default function SuccessPage() {
           </svg>
         </div>
 
-        <h1 className="text-2xl font-semibold text-blue-900">
+        {/* Title */}
+        <h1 className="text-2xl font-semibold text-white">
           Registration Successful
         </h1>
-        <p className="mt-3 text-sm leading-6 text-slate-600">
-          Our team will review it and send you a confirmation email within 24
-          hours{" "}
-          <span className=" text-blue-800">
-            (Please also check your spam folder)
-          </span>
-          . We have a plan to give a present to the first 20 registrants 🥳, so
-          please wait for the announcement. Thank you for registering!
+
+        {/* Description */}
+        <p className="mt-3 text-sm leading-6 text-zinc-400">
+          Your submission has been received. Our team will review it and send
+          confirmation within 24 hours.{" "}
+          <span className="text-emerald-400">
+            Please also check your spam folder.
+          </span>{" "}
+          Thank you for participating.
         </p>
 
-        <div className="mt-6 rounded-2xl border border-slate-200 bg-slate-50 p-4 text-left">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
-            What happens next?
+        {/* Info box */}
+        <div className="mt-6 rounded-2xl border border-white/10 bg-white/5 p-4 text-left">
+          <p className="text-xs font-semibold uppercase tracking-widest text-zinc-500">
+            What happens next
           </p>
-          <ul className="mt-2 space-y-2 text-sm text-slate-600">
-            <li>• Your payment proof has been received.</li>
-            <li>• We will verify your submission.</li>
-            <li>• You will be notified once approved.</li>
+
+          <ul className="mt-3 space-y-2 text-sm text-zinc-400">
+            <li>• Payment proof received successfully</li>
+            <li>• Verification will be completed by admin</li>
+            <li>• You’ll receive an email once approved</li>
           </ul>
         </div>
 
+        {/* Button */}
         <Link
           href="/"
-          className="mt-6 inline-flex w-full items-center justify-center rounded-xl bg-blue-900 px-4 py-3 text-sm font-semibold text-white transition hover:bg-blue-800"
+          className="mt-6 inline-flex w-full items-center justify-center rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-500/20 transition hover:from-blue-500 hover:to-indigo-500 hover:scale-[1.02] active:scale-[0.98]"
         >
           Back to Home
         </Link>
