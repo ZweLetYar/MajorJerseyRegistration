@@ -17,6 +17,7 @@ export default function Page() {
             width={500}
             height={700}
             className="w-full h-auto object-cover transition-transform duration-500 hover:scale-105"
+            priority
           />
         </div>
 

@@ -7,7 +7,7 @@ function DynamicPaymentAmount() {
 
   return (
     <div>
-      <h1 className="text-xl font-bold text-white mb-4 ">
+      <h1 className="text-xl font-bold text-white mt-4 mb-2">
         Payment (
         {sessionData?.storedData?.isRegistrant === false ? "39,500" : "36,500"}{" "}
         MMK)

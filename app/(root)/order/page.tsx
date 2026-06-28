@@ -206,7 +206,7 @@ export default function RegisterForm() {
             <button
               type="button"
               onClick={() => setOpenSizeChart(true)}
-              className="rounded-xl w-[40%] border border-indigo-500 bg-indigo-500/10 px-4 py-3 text-sm font-medium text-indigo-300 transition hover:bg-indigo-500/20"
+              className="rounded-xl w-[40%] border border-indigo-500 bg-indigo-500/10 px-2 py-2 text-xs font-medium text-indigo-300 transition hover:bg-indigo-500/20"
             >
               Size Chart
             </button>

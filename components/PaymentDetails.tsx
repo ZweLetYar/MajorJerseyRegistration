@@ -37,7 +37,7 @@ export default function PaymentDetails({ id }: { id: string }) {
         </a>
       </div>
       <div className="h-px w-[90%] mx-auto bg-slate-200" />
-      <div className="rounded-xl   bg-slate-900 p-3 text-left w-[90%] mx-auto">
+      <div className="rounded-xl   bg-slate-800 p-3 text-left w-[90%] mx-auto">
         <div className="mt-1 flex items-center justify-between gap-2">
           <span className="text-sm font-semibold text-white ms-2">
             {phoneNumber}

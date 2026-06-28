@@ -152,7 +152,7 @@ function RegisterForm() {
             Payment Screenshot
           </h3>
           <p className="mt-1 text-xs text-zinc-500">
-            Upload your payment proof to complete registration.
+            Upload your payment proof.
           </p>
         </div>
 
@@ -187,9 +187,7 @@ function RegisterForm() {
             </p>
 
             <p className="mt-1 text-xs text-zinc-500">
-              {selectedFile
-                ? selectedFile.name
-                : "Click here to browse your payment proof"}
+              {selectedFile ? selectedFile.name : "Click here to browse"}
             </p>
           </div>
         </div>

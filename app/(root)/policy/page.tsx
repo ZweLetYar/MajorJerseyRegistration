@@ -66,10 +66,12 @@ export default function page() {
 
           <div className="rounded-xl bg-white/5 p-4 border border-white/10">
             <h2 className="font-semibold text-white">📏 Size Information</h2>
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-center gap-3">
               <div>
                 <p className="mt-1 font-medium">50 Orders</p>
-                <p>Free Size (100–165 lb)</p>
+                <p>
+                  Free Size <br></br>(100–165 lb)
+                </p>
               </div>
               <div>
                 <p className="mt-3 font-medium">100 Orders</p>
