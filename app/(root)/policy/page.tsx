@@ -46,7 +46,7 @@ export default function page() {
             </p>
           </div>
 
-          <div className="rounded-xl bg-white/5 p-4 border border-white/10">
+          {/* <div className="rounded-xl bg-white/5 p-4 border border-white/10">
             <h2 className="font-semibold text-white">🏭 Production</h2>
             <p>Production time: 3 weeks</p>
             <p>MOQ: 50 pcs</p>
@@ -54,26 +54,29 @@ export default function page() {
               Production starts only after MOQ is reached and orders are
               confirmed.
             </p>
-          </div>
+          </div> */}
 
           <div className="rounded-xl bg-white/5 p-4 border border-white/10">
             <h2 className="font-semibold text-white">🔁 Refund Policy</h2>
             <p>
-              If MOQ is not reached, a full refund will be issued to all
+              If MOQ(50 pcs) is not reached, a full refund will be issued to all
               customers.
             </p>
           </div>
 
-          {/* <div className="rounded-xl bg-white/5 p-4 border border-white/10">
+          <div className="rounded-xl bg-white/5 p-4 border border-white/10">
             <h2 className="font-semibold text-white">📏 Size Information</h2>
-            <p className="mt-1 font-medium">50 Orders</p>
-            <p>Free Size (100–165 lb)</p>
-            <p>Chest: 48” | Length: 26.5”</p>
-
-            <p className="mt-3 font-medium">100 Orders</p>
-            <p>M, L, XL available</p>
-            <p className="text-slate-400">More orders = more size options</p>
-          </div> */}
+            <div className="flex justify-between items-center">
+              <div>
+                <p className="mt-1 font-medium">50 Orders</p>
+                <p>Free Size (100–165 lb)</p>
+              </div>
+              <div>
+                <p className="mt-3 font-medium">100 Orders</p>
+                <p>M, L, XL available</p>
+              </div>
+            </div>
+          </div>
 
           <p className="text-center text-slate-400 pt-2">
             Thank you for your support.

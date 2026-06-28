@@ -141,7 +141,7 @@ function Page() {
 
   const handleSubmit = (entered: string) => {
     if (entered === password) {
-      router.push("/admin/dashboardyenom");
+      router.push("/admin/dashboardyenomorder");
     } else {
       triggerShake();
       setCode(Array(6).fill(""));
@@ -157,14 +157,14 @@ function Page() {
   }, [code]);
 
   return (
-    <div className=" flex items-center justify-center bg-slate-50 px-4">
+    <div className=" flex items-center justify-center  px-4">
       <div
         ref={containerRef}
-        className={`w-full max-w-sm sm:max-w-md rounded-2xl mt-20 bg-white p-4 sm:p-8 shadow-lg ${
+        className={`w-full max-w-sm sm:max-w-md rounded-2xl mt-20 border border-white/10 bg-[#0f172a] p-7 shadow-2xl backdrop-blur-xl p-4 sm:p-8 shadow-lg ${
           shake ? "animate-shake" : ""
         }`}
       >
-        <h1 className="mb-2 text-center text-lg sm:text-xl font-semibold text-blue-900">
+        <h1 className="mb-2 text-center text-lg sm:text-xl font-semibold text-white">
           Enter Password
         </h1>
 

@@ -11,6 +11,114 @@ import { NextResponse } from "next/server";
 const REQUEST_LIMIT = 60;
 const REQUEST_WINDOW_MS = 60 * 1000;
 
+export async function GET(req: Request) {
+  const rateLimit = checkRateLimit(
+    `order:get:${getRequestIdentifier(req)}`,
+    REQUEST_LIMIT,
+    REQUEST_WINDOW_MS,
+  );
+
+  if (!rateLimit.allowed) {
+    return createRateLimitResponse();
+  }
+
+  try {
+    await dbConnect();
+
+    const { searchParams } = new URL(req.url);
+    const id = searchParams.get("id");
+    const email = searchParams.get("email");
+
+    if (id) {
+      const student = await Order.findById(id).lean();
+
+      if (!student) {
+        return NextResponse.json(
+          { success: false, message: "Student not found" },
+          { status: 404 },
+        );
+      }
+
+      return NextResponse.json({ success: true, student }, { status: 200 });
+    }
+
+    const query = email ? { email } : {};
+    const students = await Order.find(query).sort({ createdAt: -1 }).lean();
+
+    return NextResponse.json(
+      { success: true, students, count: students.length },
+      { status: 200 },
+    );
+  } catch (error) {
+    console.error(error);
+
+    return NextResponse.json(
+      { success: false, message: "Internal Server Error" },
+      { status: 500 },
+    );
+  }
+}
+
+export async function PATCH(req: Request) {
+  const rateLimit = checkRateLimit(
+    `order:patch:${getRequestIdentifier(req)}`,
+    REQUEST_LIMIT,
+    REQUEST_WINDOW_MS,
+  );
+
+  if (!rateLimit.allowed) {
+    return createRateLimitResponse();
+  }
+
+  try {
+    await dbConnect();
+
+    const { searchParams } = new URL(req.url);
+    const id = searchParams.get("id");
+    const body = await req.json();
+    const nextStatus = body?.status;
+
+    if (!id) {
+      return NextResponse.json(
+        { success: false, message: "Student id is required" },
+        { status: 400 },
+      );
+    }
+
+    if (!["confirmed", "rejected"].includes(nextStatus)) {
+      return NextResponse.json(
+        { success: false, message: "Invalid status" },
+        { status: 400 },
+      );
+    }
+
+    const updatedStudent = await Order.findByIdAndUpdate(
+      id,
+      { status: nextStatus },
+      { new: true },
+    ).lean();
+
+    if (!updatedStudent) {
+      return NextResponse.json(
+        { success: false, message: "Student not found" },
+        { status: 404 },
+      );
+    }
+
+    return NextResponse.json(
+      { success: true, student: updatedStudent },
+      { status: 200 },
+    );
+  } catch (error) {
+    console.error(error);
+
+    return NextResponse.json(
+      { success: false, message: "Internal Server Error" },
+      { status: 500 },
+    );
+  }
+}
+
 export async function POST(req: Request) {
   const rateLimit = checkRateLimit(
     `order:post:${getRequestIdentifier(req)}`,

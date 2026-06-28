@@ -3,8 +3,6 @@ import { Poppins } from "next/font/google";
 import "../globals.css";
 import Header from "@/components/Header";
 import { Toaster } from "sonner";
-import CountDownTimer from "@/components/CountDownTimer";
-import RegistrationGate from "@/components/RegistrationGate";
 
 const poppins = Poppins({
   variable: "--font-poppins",

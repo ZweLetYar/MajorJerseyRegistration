@@ -52,7 +52,7 @@ export default function SuccessPage() {
 
         {/* Button */}
         <Link
-          href="/"
+          href="/design"
           className="mt-6 inline-flex w-full items-center justify-center rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-500/20 transition hover:from-blue-500 hover:to-indigo-500 hover:scale-[1.02] active:scale-[0.98]"
         >
           Back to Home

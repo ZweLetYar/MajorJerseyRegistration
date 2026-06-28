@@ -81,15 +81,15 @@ export async function POST(req: NextRequest) {
           address: replyToAddress,
         },
         to,
-        subject: "Registration Status Update",
-        text: `Hello ${name}, we regret to inform you that your registration for the IST Major Jacket could not be approved. Year: ${year}, Roll: ${rollNo}.`,
+        subject: "Pre-ordering Status Update",
+        text: `Hello ${name}, we regret to inform you that your pre-ordering for the IST Major Jacket could not be approved. Year: ${year}, Roll: ${rollNo}.`,
         html: `
         <div style="font-family: Arial, sans-serif; background-color: #f8fafc; padding: 24px; color: #111827;">
           <div style="max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 6px 20px rgba(0,0,0,0.06);">
             
             <div style="background: linear-gradient(90deg, #dc2626 0%, #ef4444 100%); padding: 24px 32px; color: #ffffff;">
               <h2 style="margin: 0; font-size: 24px;">
-                Registration Not Approved
+                Pre-ordering Not Approved
               </h2>
               <p style="margin: 6px 0 0; font-size: 14px; opacity: 0.95;">
                 IST Major Jacket Registration System
@@ -102,9 +102,9 @@ export async function POST(req: NextRequest) {
               </p>
 
               <p style="margin: 0 0 16px; font-size: 15px; line-height: 1.7;">
-                Thank you for your interest in registering for the IST Major Jacket.
+                Thank you for your interest in pre-ordering for the IST Major Jacket.
                 After reviewing your submission, we regret to inform you that your
-                registration could not be approved at this time.
+                pre-ordering could not be approved at this time.
               </p>
 
               <div style="background: #fef2f2; border-left: 4px solid #dc2626; padding: 14px 16px; border-radius: 8px; margin-bottom: 18px;">

@@ -12,7 +12,7 @@ export default function Page() {
         {/* Image Section */}
         <div className="overflow-hidden rounded-2xl bg-black/20">
           <Image
-            src="/jacket4.jpg"
+            src="/jacket4.JPG"
             alt="jacket design"
             width={500}
             height={700}
