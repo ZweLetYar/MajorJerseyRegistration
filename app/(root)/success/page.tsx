@@ -24,7 +24,7 @@ export default function SuccessPage() {
 
         {/* Title */}
         <h1 className="text-2xl font-semibold text-white">
-          Registration Successful
+          Pre-Order Successful
         </h1>
 
         {/* Description */}

@@ -144,7 +144,7 @@ function RegisterForm() {
   };
 
   return (
-    <div className="mt-4 w-full rounded-3xl border border-white/10 bg-white/5 p-5 backdrop-blur-xl">
+    <div className="mt-2 w-full rounded-3xl border border-white/10 bg-white/5 p-5 backdrop-blur-xl">
       {/* Header */}
       <div className="mb-5 flex items-center justify-between">
         <div>

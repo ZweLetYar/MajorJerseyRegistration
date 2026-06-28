@@ -33,7 +33,7 @@ export default function page() {
 
           <div className="rounded-xl bg-white/5 p-4 border border-white/10">
             <h2 className="font-semibold text-white">📅 Pre-order Period</h2>
-            <p>June 28 – July 5</p>
+            <p>June 29 – July 6</p>
           </div>
 
           <div className="rounded-xl bg-white/5 p-4 border border-white/10">
@@ -64,7 +64,7 @@ export default function page() {
             </p>
           </div>
 
-          <div className="rounded-xl bg-white/5 p-4 border border-white/10">
+          {/* <div className="rounded-xl bg-white/5 p-4 border border-white/10">
             <h2 className="font-semibold text-white">📏 Size Information</h2>
             <p className="mt-1 font-medium">50 Orders</p>
             <p>Free Size (100–165 lb)</p>
@@ -73,10 +73,10 @@ export default function page() {
             <p className="mt-3 font-medium">100 Orders</p>
             <p>M, L, XL available</p>
             <p className="text-slate-400">More orders = more size options</p>
-          </div>
+          </div> */}
 
           <p className="text-center text-slate-400 pt-2">
-            Thank you for your support ❤️
+            Thank you for your support.
           </p>
         </div>
 
