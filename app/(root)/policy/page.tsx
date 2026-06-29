@@ -75,7 +75,9 @@ export default function page() {
               </div>
               <div>
                 <p className="mt-3 font-medium">100 Orders</p>
-                <p>M, L, XL available</p>
+                <p>
+                  M, L, XL <br></br>available
+                </p>
               </div>
             </div>
           </div>
